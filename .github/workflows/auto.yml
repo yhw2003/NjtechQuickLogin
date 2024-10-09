@@ -128,11 +128,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: ./bin_files
-      - name: Upload Release Assets
-        uses: softprops/action-gh-release@v2
+      - name: list files
+        run: |
+          ls -lh ./bin_files/
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: "Release: ${{ github.ref_name }}"
-          files: |
-            ./bin_files/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./bin_files/*
+          tag: ${{ github.ref }}
+          release_name: Latest
+          overwrite: true
+          file_glob: true
