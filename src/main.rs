@@ -102,14 +102,14 @@ fn login() -> Result<(), ()> {
             &wlan_user_ip=10.38.64.137", CONFIG.user, CONFIG.isp, CONFIG.password);
     
     let resp = ureq::get(&login_url)
-      .set("Accept", "*/*")
-      .set("Accept-Encoding", "gzip, deflate")
-      .set("Accept-Language", "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2")
-      .set("Connection", "keep-alive")
-      .set("Host", "10.50.255.11:801")
-      .set("Referer", "http://10.50.255.11/")
-      .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0")
-      .call().unwrap().into_string().unwrap();
+        .set("Accept", "*/*")
+        .set("Accept-Encoding", "gzip, deflate")
+        .set("Accept-Language", "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2")
+        .set("Connection", "keep-alive")
+        .set("Host", "10.50.255.11:801")
+        .set("Referer", "http://10.50.255.11/")
+        .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0")
+        .call().unwrap().into_string().unwrap();
     let part_right = resp.split("(").collect::<Vec<&str>>().get(1).unwrap().to_string();
     let part_final = part_right.split(")").collect::<Vec<&str>>().get(0).unwrap().to_string();
     let result = serde_json::from_str::<LoginResult>(&part_final).unwrap();

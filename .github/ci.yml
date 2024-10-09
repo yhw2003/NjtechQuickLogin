@@ -1,0 +1,54 @@
+name: CI with Docker and Rust
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    init:
+        runs-on: ubuntu-latest
+
+        steps:
+            # Step 1: Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            # Step 2: Set up Rust environment
+            - name: Set up Rust
+              uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: stable
+                  profile: minimal
+                  override: true
+
+            # Step 3: Install Docker
+            - name: Install Docker
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y docker.io
+                  sudo systemctl start docker
+                  sudo systemctl enable docker
+
+            # Step 4: Verify installations
+            - name: Check Rust and Docker
+              run: |
+                  rustc --version
+                  cargo --version
+                  docker --version
+
+            # Step 5: Install cargo cross
+            - name: Install cross-rs
+              run: |
+                  cargo install cross
+
+            - name: Build x86_64-unknown-linux-musl
+              run: |
+                  cross build --release --target x86_64-unknown-linux-musl
+
+            - name: Build x86_64-unknown-linux-gnu
+              run: |
+                  cross build --release --target x86_64-unknown-linux-gnu

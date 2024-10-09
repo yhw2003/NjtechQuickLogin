@@ -1,0 +1,5 @@
+[tasks.build_x86_64_gnu_linux]
+command = "cargo build --release --target x86_64-unknown-linux-gnu"
+
+[tasks.build_x86_64_arm_linux]
+command = "cargo build --release --target arm64-unknown-linux-gnu"
