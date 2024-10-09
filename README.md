@@ -37,7 +37,10 @@ channel = "1.80.1"
 ```
 并且我不得不将它从ci移除
 
-你可以前往[Release](https://github.com/yhw2003/NjtechQuickLogin/releases)下载构建的版本，也可看fork仓库自行发起actions构建。
+你可以前往[Actions](https://github.com/yhw2003/NjtechQuickLogin/actions)下载构建的版本，也可看fork仓库自行发起actions构建。
 并不是所有的target都经过测试，如果你有无构建的target，请提issue。
 
 rust语言的musl C库是静态连接的，这意味着musl C库构建的二进制文件可以在任何系统上运。
+
+TODO:
+    - ci/bugfix: 自动发布二进制到release
