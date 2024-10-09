@@ -1,4 +1,4 @@
-name: 自动构建
+name: 自动构建/发布
 on:
   workflow_dispatch:
     
