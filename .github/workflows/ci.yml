@@ -24,7 +24,7 @@ on:
             - loongarch64-unknown-linux-musl
 
 jobs:
-    init:
+    build:
         runs-on: ubuntu-latest
 
         steps:
@@ -64,3 +64,9 @@ jobs:
             - name: Build ${{ github.event.inputs.arch }}
               run: |
                   cross build --release --target ${{ github.event.inputs.arch }}
+
+            - name: Save the file as an artifact
+              uses: actions/upload-artifact@v2
+              with:
+                name: NjtechQuickLogin-${{ github.event.inputs.arch }}
+                path: target/${{ github.event.inputs.arch }}/release/NjtechQuickLogin
