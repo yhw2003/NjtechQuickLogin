@@ -1,0 +1,148 @@
+name: CI with Docker and Rust
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Rust environment
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      # # Step 3: Install Docker
+      # - name: Install Docker
+      #   run: |
+      #       sudo apt-get update
+      #       sudo apt-get install -y docker.io
+      #       sudo systemctl start docker
+      #       sudo systemctl enable docker
+
+      # Step 3: Verify installations
+      - name: Check Rust and Docker
+        run: |
+          rustc --version
+          cargo --version
+          docker --version
+
+      # Step 4: Install cargo cross
+      - name: Install cross-rs
+        run: |
+          cargo install cross
+
+      # 依次编译
+
+
+      # Step 5: Build targets
+      # - x86_64-unknown-linux-musl
+      - name: Build x86_64-unknown-linux-musl
+        run: |
+          cross build --release --target x86_64-unknown-linux-musl
+
+      - name: Save the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NjtechQuickLogin-x86_64-unknown-linux-musl
+          path: target/x86_64-unknown-linux-musl/release/NjtechQuickLogin
+
+      - name: clean build cache
+        run: |
+          cargo clean
+      # - x86_64-unknown-linux-gnu
+      - name: Build x86_64-unknown-linux-gnu
+        run: |
+          cross build --release --target x86_64-unknown-linux-gnu
+
+      - name: Save the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NjtechQuickLogin-x86_64-unknown-linux-musl
+          path: target/x86_64-unknown-linux-musl/release/NjtechQuickLogin
+
+      - name: clean build cache
+        run: |
+          cargo clean
+      # - mips64-unknown-linux-gnuabi64
+      - name: Build mips64-unknown-linux-gnuabi64
+        run: |
+          cross build --release --target mips64-unknown-linux-gnuabi64
+
+      - name: Save the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NjtechQuickLogin-mips64-unknown-linux-gnuabi64
+          path: target/mips64-unknown-linux-gnuabi64/release/NjtechQuickLogin
+
+      - name: clean build cache
+        run: |
+          cargo clean
+      # - mips64el-unknown-linux-gnuabi64
+      - name: Build mips64el-unknown-linux-gnuabi64
+        run: |
+          cross build --release --target mips64el-unknown-linux-gnuabi64
+
+      - name: Save the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NjtechQuickLogin-mips64el-unknown-linux-gnuabi64
+          path: target/mips64el-unknown-linux-gnuabi64/release/NjtechQuickLogin
+      - name: clean build cache
+        run: |
+          cargo clean
+
+      # - aarch64-unknown-linux-gnu
+      - name: Build aarch64-unknown-linux-gnu
+        run: |
+          cross build --release --target aarch64-unknown-linux-gnu
+      
+      - name: Save the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NjtechQuickLogin-aarch64-unknown-linux-gnu
+          path: target/aarch64-unknown-linux-gnu/release/NjtechQuickLogin
+
+      - name: clean build cache
+        run: |
+          cargo clean
+      # - aarch64-unknown-linux-musl
+      - name: Build aarch64-unknown-linux-musl
+        run: |
+          cross build --release --target aarch64-unknown-linux-musl
+      
+      - name: Save the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NjtechQuickLogin-aarch64-unknown-linux-musl
+          path: target/aarch64-unknown-linux-musl/release/NjtechQuickLogin
+
+      # Publish to Release 
+  ppublish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./bin_files
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Release: ${{ github.ref_name }}"
+          files: |
+            ./bin_files/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
