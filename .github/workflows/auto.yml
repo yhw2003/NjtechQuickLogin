@@ -61,61 +61,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: NjtechQuickLogin-x86_64-unknown-linux-gnu
-          path: target/x86_64-unknown-linux-musl/release/NjtechQuickLogin
-  build-mips64-unknown-linux-gnuabi64:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          override: true
-          
-      - name: Install cross-rs
-        run: |
-          cargo install cross
-          
-      - name: Build mips64-unknown-linux-gnuabi64
-        run: |
-          rustup target add mips64-unknown-linux-gnuabi64
-          cross build --release --target mips64-unknown-linux-gnuabi64
-
-      - name: Save the file as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NjtechQuickLogin-mips64-unknown-linux-gnuabi64
-          path: target/mips64-unknown-linux-gnuabi64/release/NjtechQuickLogin
-  build-mips64el-unknown-linux-gnuabi64:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          override: true
-          
-      - name: Install cross-rs
-        run: |
-          cargo install cross
-          
-      - name: Build mips64el-unknown-linux-gnuabi64
-        run: |
-          rustup target add mips64el-unknown-linux-gnuabi64
-          cross build --release --target mips64el-unknown-linux-gnuabi64
-
-      - name: Save the file as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NjtechQuickLogin-mips64el-unknown-linux-gnuabi64
-          path: target/mips64el-unknown-linux-gnuabi64/release/NjtechQuickLogin
+          path: target/x86_64-unknown-linux-gnu/release/NjtechQuickLogin
+    
   build-aarch64-unknown-linux-gnu:
       runs-on: ubuntu-latest
       steps:
@@ -173,8 +120,6 @@ jobs:
     needs: 
       - build-x86_64-unknown-linux-musl
       - build-x86_64-unknown-linux-gnu
-      - build-mips64-unknown-linux-gnuabi64
-      - build-mips64el-unknown-linux-gnuabi64
       - build-aarch64-unknown-linux-gnu
       - build-aarch64-unknown-linux-musl
     runs-on: ubuntu-latest

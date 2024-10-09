@@ -29,6 +29,14 @@ kill ${pid}
 ./NjtechQuickLogin -c "config.toml" --pwd "/root/njtech-quick-login/"
 ```
 
+很可惜，尽管确实存在着大量的misp64*架构的路由器，但是rust stabe工具链并不支持它们，你需要修改`rust-toolchain.toml`切换到nightly工具链才能构建
+```toml
+# rust-toolchain.toml
+[toolchain]
+channel = "1.80.1"
+```
+并且我不得不将它从ci移除
+
 你可以前往[Release](https://github.com/yhw2003/NjtechQuickLogin/releases)下载构建的版本，也可看fork仓库自行发起actions构建。
 并不是所有的target都经过测试，如果你有无构建的target，请提issue。
 
