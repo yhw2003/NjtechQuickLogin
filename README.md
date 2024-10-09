@@ -31,3 +31,5 @@ kill ${pid}
 
 你可以前往[GitHub Actions](https://github.com/yhw2003/NjtechQuickLogin/actions)下载构建的版本，也可看fork仓库自行发起actions构建。
 并不是所有的target都经过测试，如果你有无构建的target，请提issue。
+
+rust语言的musl C库是静态连接的，这意味着musl C库构建的二进制文件可以在任何系统上运。
