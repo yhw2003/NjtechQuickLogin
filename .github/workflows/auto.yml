@@ -1,6 +1,7 @@
-name: CI with Docker and Rust
-
+name: 自动构建
 on:
+  workflow_dispatch:
+    
   pull_request:
     branches:
       - master

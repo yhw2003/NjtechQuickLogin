@@ -1,4 +1,4 @@
-name: CI with Docker and Rust
+name: 手动构建
 
 on:
     workflow_dispatch:
