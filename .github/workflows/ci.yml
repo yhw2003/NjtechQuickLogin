@@ -2,6 +2,26 @@ name: CI with Docker and Rust
 
 on:
     workflow_dispatch:
+      inputs:
+        arch:
+          description: '体系结构'
+          required: true
+          default: 'x86_64'
+          type: choice
+          options:
+            - x86_64-unknown-linux-musl
+            - x86_64-unknown-linux-gnu
+            - x86_64-pc-windows-gnu
+            - x86_64-linux-android
+            - mips64-unknown-linux-gnuabi64
+            - mips64el-unknown-linux-gnuabi64
+            - aarch64-unknown-linux-gnu
+            - aarch64-unknown-linux-musl
+            - powerpc64le-unknown-linux-gnu
+            - powerpc64-unknown-linux-gnu
+            - aarch64-linux-android
+            - loongarch64-unknown-linux-gnu
+            - loongarch64-unknown-linux-musl
 
 jobs:
     init:
@@ -44,11 +64,3 @@ jobs:
             - name: Build x86_64-unknown-linux-musl
               run: |
                   cross build --release --target x86_64-unknown-linux-musl
-
-            - name: Build x86_64-unknown-linux-gnu
-              run: |
-                  cross build --release --target x86_64-unknown-linux-gnu
-
-            - name: Build x86_64-pc-windows-msvc
-              run: |
-                  cross build --release --target x86_64-pc-windows-msvc

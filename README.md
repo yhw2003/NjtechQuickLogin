@@ -28,3 +28,6 @@ kill ${pid}
 ```shell
 ./NjtechQuickLogin -c "config.toml" --pwd "/root/njtech-quick-login/"
 ```
+
+你可以前往[GitHub Actions](https://github.com/yhw2003/NjtechQuickLogin/actions)下载构建的版本，也可看fork仓库自行发起actions构建。
+并不是所有的target都经过测试，如果你有无构建的target，请提issue。
