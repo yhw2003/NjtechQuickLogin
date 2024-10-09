@@ -63,4 +63,4 @@ jobs:
             # Step 5: Build targets
             - name: Build x86_64-unknown-linux-musl
               run: |
-                  cross build --release --target x86_64-unknown-linux-musl
+                  cross build --release --target ${{ github.event.inputs.arch }}
