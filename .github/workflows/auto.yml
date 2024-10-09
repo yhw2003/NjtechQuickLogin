@@ -60,7 +60,7 @@ jobs:
       - name: Save the file as an artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NjtechQuickLogin-x86_64-unknown-linux-musl
+          name: NjtechQuickLogin-x86_64-unknown-linux-gnu
           path: target/x86_64-unknown-linux-musl/release/NjtechQuickLogin
   build-mips64-unknown-linux-gnuabi64:
       runs-on: ubuntu-latest
@@ -81,6 +81,7 @@ jobs:
           
       - name: Build mips64-unknown-linux-gnuabi64
         run: |
+          rustup target add mips64-unknown-linux-gnuabi64
           cross build --release --target mips64-unknown-linux-gnuabi64
 
       - name: Save the file as an artifact
@@ -107,6 +108,7 @@ jobs:
           
       - name: Build mips64el-unknown-linux-gnuabi64
         run: |
+          rustup target add mips64el-unknown-linux-gnuabi64
           cross build --release --target mips64el-unknown-linux-gnuabi64
 
       - name: Save the file as an artifact
