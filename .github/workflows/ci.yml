@@ -61,6 +61,6 @@ jobs:
                   cargo install cross
 
             # Step 5: Build targets
-            - name: Build x86_64-unknown-linux-musl
+            - name: Build ${{ github.event.inputs.arch }}
               run: |
                   cross build --release --target ${{ github.event.inputs.arch }}
